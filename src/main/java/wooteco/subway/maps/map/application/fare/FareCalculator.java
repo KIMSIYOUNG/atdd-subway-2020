@@ -39,6 +39,9 @@ public class FareCalculator extends FareService {
 
     @Override
     protected Fare calculateDiscountByAge(Fare fare, LoginMember member) {
+        if(member == null) {
+            return fare;
+        }
         return member.discountFare(fare.get());
     }
 }

@@ -28,6 +28,18 @@ public class PathAcceptanceStep {
                 extract();
     }
 
+    public static ExtractableResponse<Response> 헤더_없이_거리_경로_조회_요청(String type, long source, long target, TokenResponse tokenResponse) {
+        return RestAssured.given().log().all().
+            auth().
+            oauth2(tokenResponse.getAccessToken()).
+            accept(MediaType.APPLICATION_JSON_VALUE).
+            when().
+            get("/paths?source={sourceId}&target={targetId}&type={type}", source, target, type).
+            then().
+            log().all().
+            extract();
+    }
+
     public static void 적절한_경로를_응답(ExtractableResponse<Response> response, ArrayList<Long> expectedPath) {
         PathResponse pathResponse = response.as(PathResponse.class);
         List<Long> stationIds = pathResponse.getStations().stream()

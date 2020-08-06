@@ -1,19 +1,18 @@
 package wooteco.subway.maps.map.ui;
 
-import wooteco.subway.maps.map.application.MapService;
-import wooteco.subway.maps.map.domain.PathType;
-import wooteco.subway.maps.map.dto.PathResponse;
-import wooteco.subway.members.member.domain.LoginMember;
+import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.*;
+import wooteco.subway.maps.map.application.MapService;
+import wooteco.subway.maps.map.domain.PathType;
+import wooteco.subway.maps.map.dto.PathResponse;
+import wooteco.subway.members.member.domain.LoginMember;
 
 public class MapControllerTest {
     @Test
@@ -26,7 +25,8 @@ public class MapControllerTest {
 
         assertAll(
             () -> assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.OK),
-            () -> assertThat(entity.getBody()).isNotNull()
+            () -> assertThat(entity.getBody()).isNotNull(),
+            () -> assertThat(entity.getBody().getTotalMoney()).isNotNull()
         );
     }
 
