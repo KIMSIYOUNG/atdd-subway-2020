@@ -35,6 +35,16 @@ public class Line extends BaseEntity {
         this.fare = new Fare(fare);
     }
 
+    public Line(Long id, String name, String color, LocalTime startTime, LocalTime endTime, int intervalTime, int fare) {
+        this.id = id;
+        this.name = name;
+        this.color = color;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.intervalTime = intervalTime;
+        this.fare = new Fare(fare);
+    }
+
     public void update(Line line) {
         this.name = line.getName();
         this.startTime = line.getStartTime();

@@ -2,6 +2,7 @@ package wooteco.subway.maps.map.application;
 
 import com.google.common.collect.Lists;
 import wooteco.subway.maps.line.application.LineService;
+import wooteco.subway.maps.line.domain.Fare;
 import wooteco.subway.maps.line.domain.Line;
 import wooteco.subway.maps.line.domain.LineStation;
 import wooteco.subway.maps.map.application.fare.FareService;
@@ -89,13 +90,14 @@ public class MapServiceTest {
         when(lineService.findLines()).thenReturn(lines);
         when(pathService.findPath(anyList(), anyLong(), anyLong(), any())).thenReturn(subwayPath);
         when(stationService.findStationsByIds(anyList())).thenReturn(stations);
+        when(fareService.calculateFare(any(LoginMember.class), anyInt(), any(Map.class), any())).thenReturn(new Fare(1250));
 
         PathResponse pathResponse = mapService.findPath(1L, 3L, PathType.DISTANCE, new LoginMember(1L,"EMAIL","PASSWORD",15));
 
         assertThat(pathResponse.getStations()).isNotEmpty();
         assertThat(pathResponse.getDuration()).isNotZero();
         assertThat(pathResponse.getDistance()).isNotZero();
-        assertThat(pathResponse.getTotalMoney()).isGreaterThanOrEqualTo(BASIC_FARE);
+        assertThat(pathResponse.getTotalMoney()).isGreaterThanOrEqualTo(1250);
     }
 
     @Test

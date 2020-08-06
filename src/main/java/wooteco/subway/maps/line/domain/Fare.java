@@ -29,6 +29,10 @@ public class Fare {
         return new Fare((int)(this.fare * discountRate));
     }
 
+    public boolean isSame(final int that) {
+        return this.fare == that;
+    }
+
     public int get() {
         return fare;
     }

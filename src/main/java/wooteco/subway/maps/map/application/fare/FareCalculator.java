@@ -14,27 +14,24 @@ import wooteco.subway.members.member.domain.LoginMember;
 @Component
 public class FareCalculator extends FareService {
     @Override
-    protected Fare calculateFareByDistance(Fare fare, int distance) {
-        if (distance == 0) {
-            return fare.plus(0);
-        } else if (distance <= 10) {
-            return fare.plus(1250);
-        } else if (distance <= 50) {
-            return fare.plus(1250).plus(getAdditionalFare(distance, 5));
-        } else {
-            return fare.plus(1250).plus(getAdditionalFare(distance, 8));
-        }
-    }
-
-    private int getAdditionalFare(int distance, int criteria) {
-        return (int)((Math.ceil((distance - 1) / criteria) + 1) * 100);
+    public Fare calculateFare(final LoginMember member, final int distance, final Map<Long, Station> stations,
+        final List<Line> lines) {
+        return super.calculateFare(member, distance, stations, lines);
     }
 
     @Override
-    protected Fare calculateAdditionalLineFare(Fare fare, Map<Long, Station> stations, List<Line> lines) {
-        List<Long> collect = new ArrayList<>(stations.keySet());
-        final int lineFare = lines.stream()
-            .filter(line -> collect.contains(line.getId()))
+    protected Fare calculateFareByDistance(Fare fare, int distance) {
+        DistanceCalculator distanceCalculator = DistanceCalculator.of(distance);
+        final int calculate = distanceCalculator.calculate(fare.get(), distance);
+
+        return new Fare(calculate);
+    }
+
+    @Override
+    protected Fare calculateAdditionalLineFare(Fare fare, Map<Long, Station> stations, List<Line> wholeLines) {
+        List<Long> registeredLineIds = new ArrayList<>(stations.keySet());
+        final int lineFare = wholeLines.stream()
+            .filter(line -> registeredLineIds.contains(line.getId()))
             .mapToInt(Line::getFare)
             .max().getAsInt();
         return fare.plus(lineFare);

@@ -62,7 +62,7 @@ public class FavoriteAcceptanceTest extends AcceptanceTest {
         지하철_노선에_지하철역_등록되어_있음(삼호선, 교대역, 남부터미널역, 1, 2);
         지하철_노선에_지하철역_등록되어_있음(삼호선, 남부터미널역, 양재역, 2, 2);
 
-        회원_등록되어_있음(EMAIL, PASSWORD, 20);
+        회원_등록되어_있음(EMAIL, PASSWORD, 21);
         loginResponse = 로그인_되어_있음(EMAIL, PASSWORD);
     }
 

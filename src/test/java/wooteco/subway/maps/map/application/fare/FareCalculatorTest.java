@@ -9,7 +9,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import wooteco.subway.maps.line.domain.Fare;
-import wooteco.subway.maps.line.domain.Line;
 import wooteco.subway.members.member.domain.LoginMember;
 
 class FareCalculatorTest {
