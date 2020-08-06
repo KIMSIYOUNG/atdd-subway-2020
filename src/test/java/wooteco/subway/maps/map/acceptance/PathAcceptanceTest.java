@@ -62,10 +62,12 @@ public class PathAcceptanceTest extends AcceptanceTest {
     void findPathByDistance() {
         //when
         ExtractableResponse<Response> response = 거리_경로_조회_요청("DISTANCE", 1L, 3L);
+        long expectedMoney = 0;
 
         //then
         적절한_경로를_응답(response, Lists.newArrayList(교대역, 남부터미널역, 양재역));
         총_거리와_소요_시간을_함께_응답함(response, 3, 4);
+        총_금액을_함께_응답함(response, expectedMoney);
     }
 
 
@@ -74,9 +76,11 @@ public class PathAcceptanceTest extends AcceptanceTest {
     void findPathByDuration() {
         //when
         ExtractableResponse<Response> response = 거리_경로_조회_요청("DURATION", 1L, 3L);
+        long expectedMoney = 0;
         //then
         적절한_경로를_응답(response, Lists.newArrayList(교대역, 강남역, 양재역));
         총_거리와_소요_시간을_함께_응답함(response, 4, 3);
+        총_금액을_함께_응답함(response, expectedMoney);
     }
 
     private Long 지하철_노선_등록되어_있음(String name, String color) {
