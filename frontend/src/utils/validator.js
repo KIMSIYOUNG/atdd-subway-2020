@@ -28,7 +28,7 @@ const validator = {
     age: [(v) => !!v || '나이 입력이 필요합니다.', (v) => v > 0 || '나이는 1살 이상 이어야 합니다.'],
     password: [(v) => !!v || '비밀번호 입력이 필요합니다.'],
     confirmPassword: [(v) => !!v || '비밀번호 확인이 필요합니다.', (v, c) => v === c || '비밀번호가 일치하지 않습니다.']
-  }
+  },
 }
 
 export default validator

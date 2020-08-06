@@ -13,10 +13,10 @@
 
 ## 🎯 요구사항
 - [프론트엔드 미션](https://github.com/woowacourse/atdd-subway-2020/blob/master/frontend-mission.md)
-    - [ ]  백엔드 요금 조회 api를 프론트엔드에서 사용할 수 있게 연동
+    - [x]  백엔드 요금 조회 api를 프론트엔드에서 사용할 수 있게 연동
     - [ ]  템플릿 리터럴을 이용해 현재 시간을 사용자가 보기 편한 형식으로 문자열 렌더링
     - [ ]  validator를 구현해, form의 유효성을 검사
-    - [ ]  길찾기를 위해 사용자가 입력한 값을 이용해 검색결과를 불러오는 핸들러를 구현
+    - [x]  길찾기를 위해 사용자가 입력한 값을 이용해 검색결과를 불러오는 핸들러를 구현
 - [백엔드 미션](https://github.com/woowacourse/atdd-subway-2020/blob/master/backend-mission.md)
     - [x] 경로 조회 응답 결과에 요금 정보 추가(필수)
         - [x] 로그인 유무와 관계없이 경로 조회 가능

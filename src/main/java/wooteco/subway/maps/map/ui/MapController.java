@@ -1,6 +1,7 @@
 package wooteco.subway.maps.map.ui;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +14,7 @@ import wooteco.subway.maps.map.dto.PathResponse;
 import wooteco.subway.members.member.domain.LoginMember;
 
 @RestController
+@CrossOrigin
 public class MapController {
     private MapService mapService;
 

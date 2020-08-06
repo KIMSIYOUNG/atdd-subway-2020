@@ -220,6 +220,13 @@ export default {
     ...mapActions([SEARCH_PATH, FETCH_STATIONS]),
     async onSearchResult() {
       try {
+        await this.searchPath({
+          path: this.path
+        });
+        this.path.source='';
+        this.path.target='';
+        this.path.type=PATH_TYPE.DISTANCE;
+        this.showSnackbar(SNACKBAR_MESSAGES.COMMON.SUCCESS)
       } catch (e) {
         this.showSnackbar(SNACKBAR_MESSAGES.COMMON.FAIL)
         console.error(e)
@@ -251,7 +258,6 @@ export default {
     },
     async initAllStationsView() {
       try {
-        await this.fetchStations()
         if (this.stations.length <= 0) {
           return
         }
