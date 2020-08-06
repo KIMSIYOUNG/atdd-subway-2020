@@ -56,7 +56,7 @@
                           <tr>
                             <td>{{ pathResult.duration }}분</td>
                             <td>{{ pathResult.distance }}km</td>
-                            <td>{{ pathResult.fare }}원</td>
+                            <td>{{ pathResult.totalMoney }}원</td>
                           </tr>
                         </tbody>
                       </template>
@@ -157,7 +157,7 @@
                           <tr>
                             <td>{{ pathResult.duration }}분</td>
                             <td>{{ pathResult.distance }}km</td>
-                            <td>{{ pathResult.fare }}원</td>
+                            <td>{{ pathResult.totalMoney }}원</td>
                           </tr>
                         </tbody>
                       </template>
@@ -205,7 +205,7 @@ export default {
   components: { Dialog, AddFavoriteButton },
   mixins: [dialog],
   computed: {
-    ...mapGetters(['stations', 'pathResult']),
+    ...mapGetters(['stations', 'pathResult', 'totalMoney']),
     getCurrentTime() {
       const { hour, minute } = this.departureTimeView
       return `${hour > 12 ? '오후' : '오전'} ${hour < 10 ? `0${hour}` : hour}:${minute < 10 ? `0${minute}` : minute}`
