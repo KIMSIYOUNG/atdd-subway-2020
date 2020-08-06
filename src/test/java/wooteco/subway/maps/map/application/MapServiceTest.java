@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import wooteco.subway.maps.line.application.LineService;
 import wooteco.subway.maps.line.domain.Line;
 import wooteco.subway.maps.line.domain.LineStation;
+import wooteco.subway.maps.map.application.fare.FareService;
 import wooteco.subway.maps.map.domain.LineStationEdge;
 import wooteco.subway.maps.map.domain.PathType;
 import wooteco.subway.maps.map.domain.SubwayPath;
@@ -12,6 +13,8 @@ import wooteco.subway.maps.map.dto.PathResponse;
 import wooteco.subway.maps.station.application.StationService;
 import wooteco.subway.maps.station.domain.Station;
 import wooteco.subway.common.TestObjectUtils;
+import wooteco.subway.members.member.domain.LoginMember;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,6 +31,8 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class MapServiceTest {
+    private static final int BASIC_FARE = 1250;
+
     private MapService mapService;
     @Mock
     private LineService lineService;
@@ -35,6 +40,9 @@ public class MapServiceTest {
     private StationService stationService;
     @Mock
     private PathService pathService;
+
+    @Mock
+    private FareService fareService;
 
     private Map<Long, Station> stations;
     private List<Line> lines;
@@ -73,7 +81,7 @@ public class MapServiceTest {
         );
         subwayPath = new SubwayPath(lineStations);
 
-        mapService = new MapService(lineService, stationService, pathService);
+        mapService = new MapService(lineService, stationService, pathService, fareService);
     }
 
     @Test
@@ -82,11 +90,12 @@ public class MapServiceTest {
         when(pathService.findPath(anyList(), anyLong(), anyLong(), any())).thenReturn(subwayPath);
         when(stationService.findStationsByIds(anyList())).thenReturn(stations);
 
-        PathResponse pathResponse = mapService.findPath(1L, 3L, PathType.DISTANCE);
+        PathResponse pathResponse = mapService.findPath(1L, 3L, PathType.DISTANCE, new LoginMember(1L,"EMAIL","PASSWORD",15));
 
         assertThat(pathResponse.getStations()).isNotEmpty();
         assertThat(pathResponse.getDuration()).isNotZero();
         assertThat(pathResponse.getDistance()).isNotZero();
+        assertThat(pathResponse.getTotalMoney()).isGreaterThanOrEqualTo(BASIC_FARE);
     }
 
     @Test
@@ -97,6 +106,5 @@ public class MapServiceTest {
         MapResponse mapResponse = mapService.findMap();
 
         assertThat(mapResponse.getLineResponses()).hasSize(3);
-
     }
 }

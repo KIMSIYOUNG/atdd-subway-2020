@@ -19,5 +19,4 @@ public class CustomUserDetailsService implements UserDetailsService {
         Member member = memberRepository.findByEmail(principal).orElseThrow(AuthenticationException::new);
         return new LoginMember(member.getId(), member.getEmail(), member.getPassword(), member.getAge());
     }
-
 }

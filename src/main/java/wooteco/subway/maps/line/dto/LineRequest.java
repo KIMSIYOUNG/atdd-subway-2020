@@ -1,8 +1,8 @@
 package wooteco.subway.maps.line.dto;
 
-import wooteco.subway.maps.line.domain.Line;
-
 import java.time.LocalTime;
+
+import wooteco.subway.maps.line.domain.Line;
 
 public class LineRequest {
     private String name;
@@ -10,16 +10,19 @@ public class LineRequest {
     private LocalTime startTime;
     private LocalTime endTime;
     private Integer intervalTime;
+    private int fare;
 
     public LineRequest() {
     }
 
-    public LineRequest(String name, String color, LocalTime startTime, LocalTime endTime, Integer intervalTime) {
+    public LineRequest(String name, String color, LocalTime startTime, LocalTime endTime, Integer intervalTime,
+        int fare) {
         this.name = name;
         this.color = color;
         this.startTime = startTime;
         this.endTime = endTime;
         this.intervalTime = intervalTime;
+        this.fare = fare;
     }
 
     public String getName() {
@@ -42,7 +45,11 @@ public class LineRequest {
         return intervalTime;
     }
 
+    public int getFare() {
+        return fare;
+    }
+
     public Line toLine() {
-        return new Line(name, color, startTime, endTime, intervalTime);
+        return new Line(name, color, startTime, endTime, intervalTime, fare);
     }
 }

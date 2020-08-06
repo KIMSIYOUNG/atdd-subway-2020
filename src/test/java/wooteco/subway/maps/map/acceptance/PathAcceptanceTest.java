@@ -6,6 +6,8 @@ import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import wooteco.security.core.TokenResponse;
 import wooteco.subway.common.acceptance.AcceptanceTest;
 import wooteco.subway.maps.line.acceptance.step.LineAcceptanceStep;
 import wooteco.subway.maps.line.dto.LineResponse;
@@ -14,6 +16,8 @@ import wooteco.subway.maps.station.dto.StationResponse;
 
 import static wooteco.subway.maps.line.acceptance.step.LineStationAcceptanceStep.지하철_노선에_지하철역_등록되어_있음;
 import static wooteco.subway.maps.map.acceptance.step.PathAcceptanceStep.*;
+import static wooteco.subway.members.member.acceptance.MemberAcceptanceTest.*;
+import static wooteco.subway.members.member.acceptance.step.MemberAcceptanceStep.*;
 
 @DisplayName("지하철 경로 조회")
 public class PathAcceptanceTest extends AcceptanceTest {
@@ -24,6 +28,7 @@ public class PathAcceptanceTest extends AcceptanceTest {
     private Long 이호선;
     private Long 신분당선;
     private Long 삼호선;
+    private TokenResponse tokenResponse;
 
     /**
      * 교대역    --- *2호선* ---   강남역
@@ -37,6 +42,8 @@ public class PathAcceptanceTest extends AcceptanceTest {
         super.setUp();
 
         // given
+        회원_등록되어_있음(EMAIL, PASSWORD, AGE);
+        tokenResponse = 로그인_되어_있음(EMAIL, PASSWORD);
         교대역 = 지하철역_등록되어_있음("교대역");
         강남역 = 지하철역_등록되어_있음("강남역");
         양재역 = 지하철역_등록되어_있음("양재역");
@@ -61,7 +68,7 @@ public class PathAcceptanceTest extends AcceptanceTest {
     @Test
     void findPathByDistance() {
         //when
-        ExtractableResponse<Response> response = 거리_경로_조회_요청("DISTANCE", 1L, 3L);
+        ExtractableResponse<Response> response = 거리_경로_조회_요청("DISTANCE", 1L, 3L, tokenResponse);
         long expectedMoney = 0;
 
         //then
@@ -75,7 +82,7 @@ public class PathAcceptanceTest extends AcceptanceTest {
     @Test
     void findPathByDuration() {
         //when
-        ExtractableResponse<Response> response = 거리_경로_조회_요청("DURATION", 1L, 3L);
+        ExtractableResponse<Response> response = 거리_경로_조회_요청("DURATION", 1L, 3L, tokenResponse);
         long expectedMoney = 0;
         //then
         적절한_경로를_응답(response, Lists.newArrayList(교대역, 강남역, 양재역));
